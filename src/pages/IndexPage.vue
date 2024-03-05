@@ -90,18 +90,33 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref, onMounted } from "vue";
+import $ from 'jquery';
 import 'datatables.net-vue3';
 import 'datatables.net-bs5';
 
 onMounted(async () => {
   initializeDataTables();
+  getPokemons()
 });
 
 const initializeDataTables = () => {
   $(document).ready(function () {
     $('#dailyTimeLog').DataTable();
   });
+}
+
+const getPokemons = async () => {
+  try {
+    await axios.post('https://pokeapi.co/api/v2')
+      .then((response) => {
+        console.log(response)
+      })
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 </script>
 
