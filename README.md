@@ -1,11 +1,9 @@
 # Quasar App (pokemon-collection)
 
-A Quasar Project
+Pokémon Collection using Quasar
 
 ## Install the dependencies
 ```bash
-yarn
-# or
 npm install
 ```
 
@@ -13,23 +11,6 @@ npm install
 ```bash
 quasar dev
 ```
-
-
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
 
 
 ### Build the app for production
