@@ -31,43 +31,43 @@
       <!-- Cards -->
       <div class="cards">
         <q-card class="my-card text-white">
-          <q-card-section>
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
+          <q-card-section class="text-black">
+            <div class="text-subtitle2">Top 1</div>
+            <div class="text-h6">Mega Rayquaza</div>
           </q-card-section>
 
-          <q-card-section>
-            {{ lorem }}
+          <q-card-section class="text-black">
+            aeppchwo
           </q-card-section>
         </q-card>
         <q-card class="my-card text-white">
-          <q-card-section>
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
+          <q-card-section class="text-black">
+            <div class="text-subtitle2">Top 2</div>
+            <div class="text-h6">Mega Rayquaza</div>
           </q-card-section>
 
-          <q-card-section>
-            {{ lorem }}
+          <q-card-section class="text-black">
+            aeppchwo
           </q-card-section>
         </q-card>
         <q-card class="my-card text-white">
-          <q-card-section>
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
+          <q-card-section class="text-black">
+            <div class="text-subtitle2">Top 3</div>
+            <div class="text-h6">Mega Rayquaza</div>
           </q-card-section>
 
-          <q-card-section>
-            {{ lorem }}
+          <q-card-section class="text-black">
+            aeppchwo
           </q-card-section>
         </q-card>
       </div>
 
       <!-- Table -->
       <div class="table-section">
-        <table id="dailyTimeLog" class="table table-striped table-hover" width="100%;">
+        <table id="pokemonTable" class="table table-striped table-hover" width="100%;">
           <thead>
             <tr>
-              <th>Date</th>
+              <th>Pokemon</th>
               <th>Arrival</th>
               <th>Departure</th>
               <th>Late</th>
@@ -75,15 +75,40 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>vvsdv</th>
-              <th>vwedsdv</th>
-              <th>vweescd</th>
-              <th>vsesdvd</th>
-              <th>sdvsdvsd</th>
+            <tr v-for="pokemon in pokemons" :key="pokemon">
+              <th>{{ pokemon.name }}</th>
+              <!-- <tr>
+              <th>acas</th> -->
+              <q-btn label="Click me" color="primary" @click="layout = true, getPokemonInfo(pokemon.name)" />
+
+
             </tr>
           </tbody>
         </table>
+        <q-dialog v-model="layout">
+          <q-layout view="Lhh lpR fff" container class="bg-white text-dark">
+
+            <q-page-container>
+              <q-page padding>
+                <q-card-section style="width:33rem;">
+                  <div style="display:flex; justify-content:center;">
+                    <img :src="image" style="margin:auto; width:15rem; height:15rem">
+                  </div>
+                  <div class=" text-h6">{{ name }}
+                  </div>
+                  <div class="text-subtitle2">{{ weight }}</div>
+
+                  <p>Abilities:</p>
+                  <ul>
+                    <li v-for=" ability  in  abilities " :key="ability">
+                      {{ ability.ability.name }}
+                    </li>
+                  </ul>
+                </q-card-section>
+              </q-page>
+            </q-page-container>
+          </q-layout>
+        </q-dialog>
       </div>
     </div>
   </div>
@@ -96,6 +121,15 @@ import $ from 'jquery';
 import 'datatables.net-vue3';
 import 'datatables.net-bs5';
 
+const pokemons = ref([]);
+const topThree = ref([]);
+const layout = ref(false);
+
+const image = ref('');
+const name = ref('');
+const abilities = ref([]);
+const weight = ref('');
+
 onMounted(async () => {
   initializeDataTables();
   getPokemons()
@@ -103,15 +137,43 @@ onMounted(async () => {
 
 const initializeDataTables = () => {
   $(document).ready(function () {
-    $('#dailyTimeLog').DataTable();
+    $('#pokemonTable').DataTable();
   });
+}
+
+const getTopThree = async () => {
+  try {
+    await axios.get('https://pokeapi.co/api/v2/pokemon?limit=3&offset=0')
+      .then((response) => {
+        topthree.value = response.data.results
+      })
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 
 const getPokemons = async () => {
   try {
-    await axios.post('https://pokeapi.co/api/v2')
+    await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0')
       .then((response) => {
-        console.log(response)
+        pokemons.value = response.data.results
+      })
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+const getPokemonInfo = async (pName) => {
+  try {
+    await axios.get(`https://pokeapi.co/api/v2/pokemon/${pName}`)
+      .then((response) => {
+        console.log(response.data)
+        image.value = response.data.sprites.front_default;
+        name.value = response.data.name;
+        abilities.value = response.data.abilities;
+        weight.value = response.data.weight;
       })
   }
   catch (error) {
