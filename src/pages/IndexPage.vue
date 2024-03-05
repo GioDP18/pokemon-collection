@@ -94,9 +94,9 @@
                   <div style="display:flex; justify-content:center;">
                     <img :src="image" style="margin:auto; width:15rem; height:15rem">
                   </div>
-                  <div class=" text-h6">{{ name }}
+                  <div class=" text-h6">Name: {{ name }}
                   </div>
-                  <div class="text-subtitle2">{{ weight }}</div>
+                  <div class="text-subtitle2">Weight: {{ weight }}</div>
 
                   <p>Abilities:</p>
                   <ul>
