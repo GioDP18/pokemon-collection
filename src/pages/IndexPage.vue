@@ -49,20 +49,21 @@
           <thead>
             <tr>
               <th>Pokemon</th>
-              <th>Arrival</th>
-              <th>Departure</th>
-              <th>Late</th>
-              <th>Number of Hours Worked</th>
+              <th>Type</th>
+              <th>Abilities</th>
+              <th>Status</th>
+              <th>Total Base Stat</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="pokemon in pokemons" :key="pokemon">
               <th>{{ pokemon.name }}</th>
-              <!-- <tr>
-              <th>acas</th> -->
-              <q-btn label="Click me" color="primary" @click="layout = true, getPokemonInfo(pokemon.name)" />
-
-
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th @click="layout = true, getPokemonInfo(pokemon.name)" style="cursor:pointer">See details</th>
             </tr>
           </tbody>
         </table>
@@ -170,6 +171,8 @@ const getSecondToLastCharacter = (str) => {
 </script>
 
 <style lang="scss" scoped>
+$primary-color: #B64BFF;
+
 .whole {
   background-image: url('/images/pokemon.png');
   height: 13rem;
@@ -186,11 +189,11 @@ const getSecondToLastCharacter = (str) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.header .dd-buton {
-  background-color: #B64BFF;
-  height: 2rem
+  .dd-buton {
+    background-color: $primary-color;
+    height: 2rem;
+  }
 }
 
 .cards {
@@ -207,11 +210,11 @@ const getSecondToLastCharacter = (str) => {
 
 .table-section {
   margin-top: 1rem;
-}
 
-.table-section .table {
-  height: 400px;
-  width: 100%;
-  border-radius: 8px;
+  .table {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+  }
 }
 </style>
