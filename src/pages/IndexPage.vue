@@ -30,34 +30,15 @@
 
       <!-- Cards -->
       <div class="cards">
-        <q-card class="my-card text-white">
+        <q-card class="my-card text-white" v-for="(top, index) in topThree" :key="top.name">
           <q-card-section class="text-black">
-            <div class="text-subtitle2">Top 1</div>
-            <div class="text-h6">Mega Rayquaza</div>
-          </q-card-section>
-
-          <q-card-section class="text-black">
-            aeppchwo
-          </q-card-section>
-        </q-card>
-        <q-card class="my-card text-white">
-          <q-card-section class="text-black">
-            <div class="text-subtitle2">Top 2</div>
-            <div class="text-h6">Mega Rayquaza</div>
-          </q-card-section>
-
-          <q-card-section class="text-black">
-            aeppchwo
-          </q-card-section>
-        </q-card>
-        <q-card class="my-card text-white">
-          <q-card-section class="text-black">
-            <div class="text-subtitle2">Top 3</div>
-            <div class="text-h6">Mega Rayquaza</div>
-          </q-card-section>
-
-          <q-card-section class="text-black">
-            aeppchwo
+            <div class="text-subtitle2">Top {{ index + 1 }}</div>
+            <div class="text-h6">{{ top.name }}</div>
+            <div style="display:flex; justify-content:center;">
+              <img
+                :src="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + top.url.charAt(top.url.length - 2) + '.png'"
+                alt="" style="width:10rem; height:10rem">
+            </div>
           </q-card-section>
         </q-card>
       </div>
@@ -133,6 +114,7 @@ const weight = ref('');
 onMounted(async () => {
   initializeDataTables();
   getPokemons()
+  getTopThree()
 });
 
 const initializeDataTables = () => {
@@ -145,7 +127,8 @@ const getTopThree = async () => {
   try {
     await axios.get('https://pokeapi.co/api/v2/pokemon?limit=3&offset=0')
       .then((response) => {
-        topthree.value = response.data.results
+        console.log(response.data.results)
+        topThree.value = response.data.results
       })
   }
   catch (error) {
@@ -179,6 +162,10 @@ const getPokemonInfo = async (pName) => {
   catch (error) {
     console.log(error);
   }
+}
+
+const getSecondToLastCharacter = (str) => {
+  return str.charAt(str.length - 2);
 }
 </script>
 
